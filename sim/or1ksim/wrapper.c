@@ -168,8 +168,9 @@ sim_open (SIM_OPEN_KIND                kind,
 
       local_argv = malloc ((local_argc + 1) * sizeof (char *));
 
+      /* hardcode command word in first argument */
       j = 0;
-      local_argv[j++] = "bananarama";
+      local_argv[j++] = "sim";
 
       for (i = 1 ; i < argc; i++)
 	{
