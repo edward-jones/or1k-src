@@ -5220,9 +5220,11 @@ if test "x$enable_or1ksim" != xno; then
 
   if test "x$withval" != x
   then
-      CONFIG_LDFLAGS="${CONFIG_LDFLAGS} -Wl,-rpath -Wl,$withval/lib -L$withval/lib -lsim"
+      CONFIG_LDFLAGS="${CONFIG_LDFLAGS} -Wl,-rpath -Wl,$withval/lib -L$withval/lib"
+      LIBS="${LIBS} -lsim"
   else
-      CONFIG_LDFLAGS="${CONFIG_LDFLAGS} -Wl,-rpath -Wl,/opt/or1ksim/lib -L/opt/or1ksim/lib -lsim"
+      CONFIG_LDFLAGS="${CONFIG_LDFLAGS} -Wl,-rpath -Wl,/opt/or1ksim/lib -L/opt/or1ksim/lib"
+      LIBS="${LIBS} -lsim"
   fi
 
 fi
