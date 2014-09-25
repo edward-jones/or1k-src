@@ -154,9 +154,13 @@ sim_open (SIM_OPEN_KIND                kind,
 	      sysroot_defined_p = argc;
 	}
 
+      /* argv[0] is the file to sim rather than the command, but the init
+       * expects the command there so need space for it */
+      local_argc = argc + 1;
+
       /* If we have no memory defined, we give it a default 8MB. We also always
 	 run quiet. So we must define our own argument vector */
-      local_argc = mem_defined_p ? argc + 1 : argc + 3;
+      local_argc = mem_defined_p ? local_argc + 1 : local_argc + 3;
 
       /* We don't support --sysroot argument, so if we asked, remove it from
 	the list. */
@@ -165,7 +169,9 @@ sim_open (SIM_OPEN_KIND                kind,
       local_argv = malloc ((local_argc + 1) * sizeof (char *));
 
       j = 0;
-      for (i = 0 ; i < argc; i++)
+      local_argv[j++] = "bananarama";
+
+      for (i = 1 ; i < argc; i++)
 	{
 	    if (i != sysroot_defined_p)
 	      local_argv[j++] = argv[i];
@@ -179,7 +185,10 @@ sim_open (SIM_OPEN_KIND                kind,
 	  local_argv[j++] = "8M";
 	}
 
-      local_argv[j] = NULL;
+/* local_argv[j] = NULL; */
+    /* last arg is file to load, found in argv[0] */
+    local_argv[j++] = argv[0];
+    local_argv[j] = NULL;
 
       /* Try to initialize, then we can free the local argument vector. If we
 	 fail to initialize return NULL to indicate that failure. */ 

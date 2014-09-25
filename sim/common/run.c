@@ -199,6 +199,9 @@ main (ac, av)
 
   name = *av;
   prog_args = av;
+  
+  /* file to load in first argument to sim wrapper */
+  sim_argv[0] = av[0];  
 
   if (verbose)
     {
